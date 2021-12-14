@@ -4,12 +4,11 @@ package com.example.composetut
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -50,44 +49,54 @@ class MainActivity : ComponentActivity() {
         //painter for taking resource
         //strings for description
         setContent {
-            val scaffoldState = rememberScaffoldState()
-           var textFiledState by remember {
-               mutableStateOf("")
-           }
-            val  scope = rememberCoroutineScope()
 
-           Scaffold(modifier = Modifier.fillMaxSize(),
-           scaffoldState = scaffoldState
+            //get indxed list
+            LazyColumn{
+                itemsIndexed(listOf("this","is","jetpack","Compose"),
+                ){ index,item ->
+                    Text(
+                        text = "$item",
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 24.dp)
+                    )
+                }
 
-               ) {
-               Column(
-                   horizontalAlignment = Alignment.CenterHorizontally,
-                   verticalArrangement = Arrangement.Center,
-                   modifier = Modifier
-                       .fillMaxSize()
-                       .padding(horizontal = 38.dp)
-               
-                   ) {
-                   TextField(value = textFiledState, label = {
-                       Text(text = "Enter Your Name")
-                   }, onValueChange = {
-                       textFiledState = it
-                   },
-                   singleLine = true,
-                   modifier = Modifier.fillMaxWidth())
-                   Spacer(modifier = Modifier.height(16.dp))
-                   Button(onClick = {
-                       scope.launch {
-                           scaffoldState.snackbarHostState.showSnackbar("Hello $textFiledState")
+            }
 
-                       }
-                   }) {
-                       Text(text = "please gread me")
-                   }
+            //items loaded render when needed
+//            LazyColumn{
+//                items (5000){
+//                    Text(
+//                        text = "Item $it",
+//                        fontSize = 24.sp,
+//                        fontWeight = FontWeight.Bold,
+//                        textAlign = TextAlign.Center,
+//                        modifier = Modifier
+//                            .fillMaxWidth()
+//                            .padding(vertical = 24.dp)
+//                        )
+//                }
+//            }
 
-               }
-               Text(text = "Hello Philip")
-           }
+//            val scrollState = rememberScrollState()
+            //this items loaded during statrup which is bad
+//            Column(modifier = Modifier.verticalScroll(scrollState)) {
+//                for (i in 1..50){
+//                    Text(
+//                        text = "Item $i",
+//                        fontSize = 24.sp,
+//                        fontWeight = FontWeight.Bold,
+//                        textAlign = TextAlign.Center,
+//                        modifier = Modifier
+//                            .fillMaxWidth()
+//                            .padding(vertical = 24.dp)
+//                        )
+//                }
+//            }
         }
     }
 }
