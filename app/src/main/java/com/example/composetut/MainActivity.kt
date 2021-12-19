@@ -40,10 +40,13 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
+import com.example.composetut.view.ViewPagerSlider
+import com.google.accompanist.pager.ExperimentalPagerApi
 import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 class MainActivity : ComponentActivity() {
+    @ExperimentalPagerApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -54,35 +57,11 @@ class MainActivity : ComponentActivity() {
         //painter for taking resource
         //strings for description
         setContent {
-            val constraints = ConstraintSet {
-                val greenBox = createRefFor("greenbox")
-                val redBox = createRefFor("redbox")
-
-                constrain(greenBox){
-                    top.linkTo(parent.top)
-                    start.linkTo(parent.start)
-                    width = Dimension.value(100.dp)
-                    height = Dimension.value(100.dp)
-                }
-
-                constrain(redBox){
-                    top.linkTo(parent.top)
-                    start.linkTo(greenBox.end)
-                    end.linkTo(parent.end)
-                    width = Dimension.value(100.dp)
-                    height = Dimension.value(100.dp)
-                }
-                createHorizontalChain(greenBox,redBox)
-
-            }
-            ConstraintLayout(constraints, modifier = Modifier.fillMaxSize()) {
-                Box(modifier = Modifier.background(Color.Green).layoutId("greenbox")) {
-                    
-                }
-                Box(modifier = Modifier.background(Color.Red).layoutId("redbox")) {
+            ComposeTutTheme {
+                Surface(color= MaterialTheme.colors.background) {
+                    ViewPagerSlider()
 
                 }
-
             }
         }
     }
