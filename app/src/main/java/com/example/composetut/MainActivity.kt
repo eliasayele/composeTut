@@ -18,6 +18,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.composetut.ui.theme.ComposeTutTheme
@@ -36,14 +37,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.unit.Constraints
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.*
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
 import com.example.composetut.view.ViewPagerSlider
 import com.google.accompanist.pager.ExperimentalPagerApi
+import kotlinx.coroutines.Delay
 import kotlinx.coroutines.launch
 import kotlin.random.Random
 
@@ -59,56 +59,39 @@ class MainActivity : ComponentActivity() {
         //painter for taking resource
         //strings for description
         setContent {
-            var sizeState by remember {
-                mutableStateOf(200.dp)
-            }
-            val size by animateDpAsState(
-                targetValue = sizeState ,
-                tween(
-                    durationMillis = 1000
-                )
-//                keyframes {
-//                    durationMillis= 5000
-//                    sizeState at 0 with LinearEasing
-//                    sizeState * 1.5f at 1000 with FastOutLinearInEasing
-//                    sizeState *2f at 5000
-//                }
-//                spring(
-//                    Spring.DampingRatioHighBouncy
-//                )
-//                    tween(
-//                        durationMillis = 3000,
-//                        delayMillis = 300,
-//                        easing = LinearOutSlowInEasing
-//                    )
-                )
-            val infiniteTransition  = rememberInfiniteTransition()
-            val color by infiniteTransition.animateColor(
-                initialValue = Color.Red ,
-                targetValue = Color.Green,
-                animationSpec = infiniteRepeatable(
-                    tween(durationMillis = 2000),
-                    repeatMode = RepeatMode.Reverse
-                )
-            )
-             Box(modifier = Modifier
-                 .size(size)
-                 .background(color),
-                 contentAlignment = Alignment.Center
-             ){
-                 Button(onClick = {
-                     sizeState += 50.dp
-                 }) {
-                     Text("Increase Size")
-                 }
-             }
+
         }
     }
 }
 
 
+@Composable
+fun CircularProgressBar(
+    percentage:Float,
+    number:Int,
+    fontSize:TextUnit,
+    radius: Dp = 28.dp,
+    color:Color = Color.Green,
+    strokeWidth:Dp = 8.dp,
+    animDuration:Int = 1000,
+    animDelay: Int = 0
+)
+{
+    var animationPlayed by remember {
+        mutableStateOf(false)
+    }
+    val curPercentage = animateFloatAsState(
+        targetValue = if(animationPlayed)
+            percentage else 0f,
+        animationSpec = tween(
+            durationMillis = animDuration,
+            delayMillis = animDelay
+        )
+        )
 
 
+
+}
 
 
 
