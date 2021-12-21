@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
@@ -17,6 +18,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.layout.boundsInWindow
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -33,72 +37,56 @@ class MainActivity : ComponentActivity() {
     @ExperimentalPagerApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         val fontFamily = FontFamily(
             Font(R.font.lexenddeca_thin, FontWeight.Thin),
             Font(R.font.lexenddeca_light, FontWeight.Light),
         )
-
         setContent {
-        Box (
-            contentAlignment = Alignment.Center,
-             modifier = Modifier.fillMaxSize()
-        )
-        {
-                CircularProgressBar(percentage = 0.8f, number = 100)
+
         }
-     }
     }
 }
 
 @Composable
-fun CircularProgressBar(
-    percentage: Float,
-    number: Int,
-    fontSize: TextUnit = 28.sp,
-    radius: Dp = 50.dp,
-    color: Color = Color.Green,
-    strokeWidth: Dp = 8.dp,
-    animDuration: Int = 1000,
-    animDelay: Int = 0
+fun MusicKnob(
+    modifier: Modifier = Modifier,
+    limitingAngle:Float = 25f,
+    onValueChange:(Float) -> Unit
 ) {
-    var animationPlayed by remember {
-        mutableStateOf(false)
-    }
 
-    val curPercentage = animateFloatAsState(
-        targetValue = if (animationPlayed)
-            percentage else 0f,
-        animationSpec = tween(
-            durationMillis = animDuration,
-            delayMillis = animDelay
+var rotation by remember {
+
+    mutableStateOf(limitingAngle)
+}
+    var touchX by remember {
+        mutableStateOf(0f)
+    }
+    var touchY by remember {
+        mutableStateOf(0f)
+    }
+    var centerX by remember {
+        mutableStateOf(0f)
+    }
+    var centerY by remember {
+        mutableStateOf(0f)
+    }
+    
+    Image(
+        painter = painterResource(id = R.drawable.music_knob),
+        contentDescription = "music knob pic",
+        modifier = modifier
+            .fillMaxSize()
+            .onGloballyPositioned {
+                var windowBounds = it.boundsInWindow()
+                centerX = windowBounds.size.width / 2f
+                centerY = windowBounds.size.height / 2f
+
+
+
+
+
+            }
         )
-    )
-
-    LaunchedEffect(key1 = true) {
-        animationPlayed = true
-    }
-
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = Modifier.size(radius * 2)
-    ) {
-        Canvas(modifier = Modifier.size(radius * 2f)) {
-            drawArc(
-                color = color,
-                -90f,
-                360 * curPercentage.value,
-                useCenter = false,
-                style = Stroke(strokeWidth.toPx(), cap = StrokeCap.Round),
-                )
-        }
-        Text(
-            text = (curPercentage.value * number).toInt().toString(),
-            color = Color.Black,
-            fontSize = fontSize,
-            fontWeight = FontWeight.Bold
-        )
-    }
 
 
 }
@@ -108,6 +96,6 @@ fun CircularProgressBar(
 @Composable
 fun DefaultPreview() {
     ComposeTutTheme {
-        Text("Jetpack")
+        Text("JetPack")
     }
 }
