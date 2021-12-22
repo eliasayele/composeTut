@@ -34,7 +34,7 @@ import androidx.compose.ui.util.lerp
 import androidx.compose.ui.viewinterop.AndroidView
 
 import com.example.composetut.model.kidsList
-import com.example.composetut.ui.theme.Purple500
+
 import com.google.accompanist.pager.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.yield
@@ -65,7 +65,7 @@ fun ViewPagerSlider(){
         Column(modifier = Modifier
             .height(50.dp)
             .fillMaxWidth()
-            .background(color = Purple500),
+            .background(color = Color.Cyan),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
 

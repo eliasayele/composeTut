@@ -12,10 +12,10 @@ class KidsData (
 
 //prepare the date to display
 val kidsList  = listOf(
-    KidsData("Love Her exression",4.5f,"All the children in the word are cute and innocient", R.drawable.image_4),
-    KidsData("Remembering Childohod",4.5f,"All the children in the word are cute and innocient", R.drawable.image_1),
-    KidsData("Girls with the bautiful smil",4.5f,"All the children in the word are cute and innocient", R.drawable.image_3),
-    KidsData("Bath Time",4.5f,"All the children in the word are cute and innocient", R.drawable.image_2),
-    KidsData("Beginning Life",4.5f,"All the children in the word are cute and innocient", R.drawable.image_5),
-    KidsData("Sleep Time",4.5f,"All the children in the word are cute and innocient", R.drawable.image_6),
+    KidsData("Love Her exression",4.5f,"All the children in the word are cute and innocient", R.drawable.ic_play),
+    KidsData("Remembering Childohod",4.5f,"All the children in the word are cute and innocient", R.drawable.ic_play),
+    KidsData("Girls with the bautiful smil",4.5f,"All the children in the word are cute and innocient", R.drawable.ic_play),
+    KidsData("Bath Time",4.5f,"All the children in the word are cute and innocient", R.drawable.ic_play),
+    KidsData("Beginning Life",4.5f,"All the children in the word are cute and innocient", R.drawable.ic_play),
+    KidsData("Sleep Time",4.5f,"All the children in the word are cute and innocient", R.drawable.ic_play),
 )

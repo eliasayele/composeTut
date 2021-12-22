@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -34,62 +35,20 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 
 class MainActivity : ComponentActivity() {
 
+    @ExperimentalFoundationApi
     @ExperimentalPagerApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val fontFamily = FontFamily(
-            Font(R.font.lexenddeca_thin, FontWeight.Thin),
-            Font(R.font.lexenddeca_light, FontWeight.Light),
+            Font(R.font.gothica1_black, FontWeight.Black),
+            Font(R.font.gothica1_regular, FontWeight.Normal),
         )
         setContent {
-
+            HomeScreen()
         }
     }
 }
 
-@Composable
-fun MusicKnob(
-    modifier: Modifier = Modifier,
-    limitingAngle:Float = 25f,
-    onValueChange:(Float) -> Unit
-) {
-
-var rotation by remember {
-
-    mutableStateOf(limitingAngle)
-}
-    var touchX by remember {
-        mutableStateOf(0f)
-    }
-    var touchY by remember {
-        mutableStateOf(0f)
-    }
-    var centerX by remember {
-        mutableStateOf(0f)
-    }
-    var centerY by remember {
-        mutableStateOf(0f)
-    }
-    
-    Image(
-        painter = painterResource(id = R.drawable.music_knob),
-        contentDescription = "music knob pic",
-        modifier = modifier
-            .fillMaxSize()
-            .onGloballyPositioned {
-                var windowBounds = it.boundsInWindow()
-                centerX = windowBounds.size.width / 2f
-                centerY = windowBounds.size.height / 2f
-
-
-
-
-
-            }
-        )
-
-
-}
 
 
 @Preview(showBackground = true)
